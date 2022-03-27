@@ -23,9 +23,9 @@ agent any
         // checkout Liquibase project from CLO repo
         sh '''
           cwd=$(pwd)
-          docker run --network=host --rm -v /tmp:/liquibase/changelog liquibase/liquibase --url="jdbc:postgresql://localhost:5432/${ENVIRONMENT_STEP}" --changeLogFile=changelog.postgres.sql --username=lbase --password=lbase status --verbose
-          docker run --network=host --rm -v /tmp:/liquibase/changelog liquibase/liquibase --url="jdbc:postgresql://localhost:5432/${ENVIRONMENT_STEP}" --changeLogFile=changelog.postgres.sql --username=lbase --password=lbase updatesql
-          docker run --network=host --rm -v /tmp:/liquibase/changelog liquibase/liquibase --url="jdbc:postgresql://localhost:5432/${ENVIRONMENT_STEP}" --changeLogFile=changelog.postgres.sql --username=lbase --password=lbase --logLevel=debug update
+          docker run --network=host --rm -v "${cwd}"/changelogs:/liquibase/changelog liquibase/liquibase --url="jdbc:postgresql://localhost:5432/${ENVIRONMENT_STEP}" --changeLogFile=changelog.postgres.sql --username=lbase --password=lbase status --verbose
+          docker run --network=host --rm -v "${cwd}"/changelogs:/liquibase/changelog liquibase/liquibase --url="jdbc:postgresql://localhost:5432/${ENVIRONMENT_STEP}" --changeLogFile=changelog.postgres.sql --username=lbase --password=lbase updatesql
+          docker run --network=host --rm -v "${cwd}"/changelogs:/liquibase/changelog liquibase/liquibase --url="jdbc:postgresql://localhost:5432/${ENVIRONMENT_STEP}" --changeLogFile=changelog.postgres.sql --username=lbase --password=lbase --logLevel=debug update
           '''
       } // steps for checkout stages
     } // stage 'checkout'
